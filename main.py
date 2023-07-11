@@ -116,9 +116,9 @@ knn_model = NearestNeighbors(n_neighbors=6, algorithm='brute', metric='cosine')
 knn_model.fit(features_matrix)
 
 @app.get('/recomendaciones/{titulo}')
-def recommend_movies(movie_title, top_n=5):
+def recommend_movies(titulo, top_n=5):
     # Encontramos las pelicula
-    movie_index = df[df['title'] == movie_title].index[0]
+    movie_index = df[df['title'] == titulo].index[0]
 
     # Encontramos las peliculas similares
     _, indices = knn_model.kneighbors(features_matrix[movie_index])
@@ -126,4 +126,4 @@ def recommend_movies(movie_title, top_n=5):
     # Extraemos los titulos de las peliculas
     top_movies = df.loc[indices.flatten()[1:top_n+1], 'title'].tolist()
 
-    return {'Pelicula': movie_title, 'Peliculas Recomendadas': top_movies}
+    return {'Pelicula': titulo, 'Peliculas Recomendadas': top_movies}
