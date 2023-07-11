@@ -124,6 +124,6 @@ def recommend_movies(movie_title, top_n=5):
     _, indices = knn_model.kneighbors(features_matrix[movie_index])
 
     # Extraemos los titulos de las peliculas
-    top_movies = df.loc[indices.flatten()[1:top_n+1], 'title'].tolist()
+    top_movies = df.loc[str(indices.flatten()[1:top_n+1]), 'title'].tolist()
 
     return {'Pelicula': movie_title, 'Peliculas Recomendadas': top_movies}
